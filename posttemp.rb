@@ -24,7 +24,9 @@ end
 
 sensor = HIH6130.new('/dev/i2c-1')
 
-10.times do
-  p sensor.fetch_humidity_temperature.round(1)
-  sleep(1)
+loop do
+  temp =  sensor.fetch_humidity_temperature.round(1)
+  puts temp
+  sleep(10)
+  postTemperature("192.168.3.1", 3000, temp)
 end
