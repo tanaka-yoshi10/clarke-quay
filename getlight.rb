@@ -2,6 +2,7 @@
 
 require 'net/http'
 require 'json'
+require 'date'
 
 def getLightStatus(host, port, id)
   Net::HTTP.version_1_2
@@ -21,7 +22,7 @@ end
 def postTemperature(host, port, value)
   Net::HTTP.version_1_2
 
-  body = %Q!{ "value" : "#{value}", "mearsured_at" : "" }!
+  body = %Q!{ "value" : "#{value}", "mearsured_at" : "#{DateTime.now.to_s}" }!
   puts body
   req = Net::HTTP::Post.new("http://#{host}:#{port}/temperatures", initheader = {'Content-Type' =>'application/json'})
   req.body = body
