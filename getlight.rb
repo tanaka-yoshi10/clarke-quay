@@ -18,6 +18,19 @@ def getLightStatus(host, port, id)
   return JSON.parse(body)
 end
 
+def postTemperature(host, port, value)
+  Net::HTTP.version_1_2
+
+  body = %Q!{ "value" : "#{value}", "mearsured_at" : "" }!
+  puts body
+  req = Net::HTTP::Post.new("http://#{host}:#{port}/temperatures", initheader = {'Content-Type' =>'application/json'})
+  req.body = body
+  Net::HTTP.start(host, port) {|http|
+    response = http.request(req)
+  }
+end
+
 if $0 == __FILE__
   p getLightStatus("192.168.3.1", 3000, "1")
+  p postTemperature("192.168.3.1", 3000, "25.1")
 end
